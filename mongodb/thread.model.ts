@@ -28,6 +28,25 @@ const threadSchema = new mongoose.Schema({
       ref: "Thread",
     },
   ],
+  reactions: {
+    type: [reactionSchema], // Array of reaction subdocuments
+    default: [],
+  },
+});
+
+const reactionSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,   
+
+  },
+  reactionType: {
+    type: String,
+    enum: ["LIKE", "DISLIKE"],   
+ // Explicitly define allowed reaction types
+    required: true,
+  },
 });
 
 const Thread = mongoose.models.Thread || mongoose.model("Thread", threadSchema);
